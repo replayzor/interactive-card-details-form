@@ -5,10 +5,11 @@ function Form({ updateCardData, onSubmitted }) {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
+		await new Promise((resolve) => setTimeout(resolve, 2000));
 		updateCardData({
 			cardNumber: data.cardNumber,
 			cardHolderName: data.name,
@@ -129,10 +130,11 @@ function Form({ updateCardData, onSubmitted }) {
 				</div>
 			</div>
 			<button
+				disabled={isSubmitting}
 				type="submit"
 				className="w-[95%] py-4 mt-6 text-neutral-lightGrayishViolet rounded-lg bg-neutral-veryDarkViolet"
 			>
-				Confirm
+				{isSubmitting ? "Loading..." : "Confirm"}
 			</button>
 		</form>
 	);
